@@ -17,9 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ip = editText_hostName.text.toString()
-        mac = editText_mac.text.toString()
-
         button_ping.setOnClickListener {
             ping(ip)
 //            try{
@@ -32,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         button_wol.setOnClickListener {
-            wakeUp(ip, mac)
+            ip = editText_hostName.text.toString()
+            mac = editText_mac.text.toString()
+            wakeUp("http://$ip", mac)
         }
     }
 
@@ -85,7 +84,6 @@ class MainActivity : AppCompatActivity() {
         }
         return bytes
     }
-
 
 
     fun ping(ip: String) {
