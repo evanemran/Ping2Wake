@@ -2,20 +2,36 @@ package com.evanemran.wolclient
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View.Z
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.evanemran.wolclient.database.RoomDB
+import com.evanemran.wolclient.dialog.AddDeviceDialog
+import com.evanemran.wolclient.listener.AddListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers.Main
 import java.io.IOException
 import java.net.*
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity() , AddListener {
     var ip = ""
     var mac = ""
+    var database: RoomDB? = null
+    var deviceList: List<Device> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        database = RoomDB.getInstance(this)
+        deviceList = database?.mainDAO()!!.all
+
+        //adapter for spinner
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            deviceList
+        )
+        spinner.adapter = adapter
 
         button_ping.setOnClickListener {
             ping(ip)
@@ -32,6 +48,11 @@ class MainActivity : AppCompatActivity() {
             ip = editText_hostName.text.toString()
             mac = editText_mac.text.toString()
             wakeUp("http://$ip", mac)
+        }
+
+        imageButton_add.setOnClickListener {
+            val addDeviceDialog = AddDeviceDialog(this)
+            addDeviceDialog.show(supportFragmentManager, "payment")
         }
     }
 
@@ -86,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun ping(ip: String) {
+    private fun ping(ip: String) {
         try {
             val url = URL("http://$ip")
             val urlc: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -103,5 +124,10 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    override fun onAddClicked(device: Device) {
+        database?.mainDAO()!!.insert(device)
+        Snackbar.make(findViewById(android.R.id.content), device.deviceName + " added successfully!", Snackbar.LENGTH_SHORT).show()
     }
 }

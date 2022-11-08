@@ -1,58 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:fitsSystemWindows="true"
     android:background="@color/black"
     tools:context=".MainActivity">
-
-    <TextView
-        android:text="Select Host: "
-        android:textColor="@color/white"
-        android:padding="8dp"
-        android:textSize="14sp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+        <Spinner
+            android:id="@+id/spinner"
+            android:tooltipText="Select Host"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/editText_hostName"
-        android:hint="Enter host..."
-        android:text="@string/default_host"
-        android:textColorHint="@color/grey"
-        android:textColor="@color/white"
-        android:padding="8dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/rounded_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/editText_hostName"
+            android:hint="Enter host..."
+            android:text="@string/default_host"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/rounded_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/editText_mac"
-        android:hint="Enter Mac Address..."
-        android:text="@string/mac"
-        android:textColorHint="@color/grey"
-        android:textColor="@color/white"
-        android:padding="8dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/rounded_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/editText_mac"
+            android:hint="Enter Mac Address..."
+            android:text="@string/mac"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/rounded_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/button_ping"
-        android:text="Ping"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/button_ping"
+            android:text="Ping"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/button_wol"
-        android:text="Wake on LAN"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/button_wol"
+            android:text="Wake on LAN"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="visible"
+        android:id="@+id/imageButton_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/purple_200"
+        android:src="@drawable/ic_add"
+        android:tint="@color/white"
+        app:fabSize="normal" />
+
+</RelativeLayout>
