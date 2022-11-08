@@ -29,6 +29,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <EditText
+        android:id="@+id/editText_mac"
+        android:hint="Enter Mac Address..."
+        android:text="@string/mac"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/button_ping"
         android:text="Ping"

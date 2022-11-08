@@ -17,7 +17,7 @@ class Ping {
    var cnt = Int.MAX_VALUE
 
    fun getResponse(): String {
-      val response = "CNT: " + cnt +" DNS: " + dns + " Host: " + host
+      val response = "CNT: " + cnt +" DNS: " + dns + " Host: " + host + " Connection: " + net
       return response
    }
 }
