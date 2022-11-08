@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WOL Client</string>
+    <string name="default_host">https://www.google.com:443/</string>
+</resources>
