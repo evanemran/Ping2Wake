@@ -1,9 +1,12 @@
 package com.evanemran.wolclient
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.evanemran.wolclient.adapter.SpinAdapter
 import com.evanemran.wolclient.database.RoomDB
 import com.evanemran.wolclient.dialog.AddDeviceDialog
 import com.evanemran.wolclient.listener.AddListener
@@ -11,6 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.net.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 class MainActivity : AppCompatActivity() , AddListener {
@@ -31,7 +36,14 @@ class MainActivity : AppCompatActivity() , AddListener {
             android.R.layout.simple_spinner_dropdown_item,
             deviceList
         )
-        spinner.adapter = adapter
+
+        //custom adapter
+        var cAdapter = SpinAdapter(this,
+            R.layout.spinner_text,
+            deviceList)
+
+
+        spinner.adapter = cAdapter
 
         button_ping.setOnClickListener {
             ping(ip)
@@ -47,7 +59,7 @@ class MainActivity : AppCompatActivity() , AddListener {
         button_wol.setOnClickListener {
             ip = editText_hostName.text.toString()
             mac = editText_mac.text.toString()
-            wakeUp("http://$ip", mac)
+            wakeUp("https://$ip", mac)
         }
 
         imageButton_add.setOnClickListener {
@@ -75,13 +87,25 @@ class MainActivity : AppCompatActivity() , AddListener {
                 i += macBytes.size
             }
             Log.d("wakeup", "calculating completed, sending...")
-            val address: InetAddress = InetAddress.getByName(broadcastIP)
-            val packet = DatagramPacket(bytes, bytes.size, address, 9)
-            val socket = DatagramSocket()
-            socket.send(packet)
-            socket.close()
-            Log.d("wakeup", "Magic Packet sent")
-            Snackbar.make(findViewById(android.R.id.content), "Magic Packet sent", Snackbar.LENGTH_SHORT).show()
+
+            val thread = Thread {
+                try {
+                    //Your code goes here
+                    val address: InetAddress = InetAddress.getByName(broadcastIP)
+                    val packet = DatagramPacket(bytes, bytes.size, address, 9)
+                    val socket = DatagramSocket()
+                    socket.send(packet)
+                    socket.close()
+                    Log.d("wakeup", "Magic Packet sent")
+                    Snackbar.make(findViewById(android.R.id.content), "Magic Packet sent", Snackbar.LENGTH_SHORT).show()
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                    Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_SHORT).show()
+                }
+            }
+
+            thread.start()
+
         } catch (e: Exception) {
             Log.e("wakeup", e.printStackTrace().toString())
             Snackbar.make(findViewById(android.R.id.content), e.printStackTrace().toString(), Snackbar.LENGTH_SHORT).show()

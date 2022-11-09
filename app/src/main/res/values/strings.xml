@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WOL Client</string>
+    <string name="app_name">Ping 2 Wake</string>
     <string name="default_host">172.16.201.136</string>
     <string name="mac">C8-D3-FF-3C-5D-4C</string>
 </resources>
