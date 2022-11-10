@@ -1,4 +1,4 @@
-package com.evanemran.wolclient
+package com.evanemran.wolclient.packet
 
 import java.net.DatagramPacket
 import java.net.DatagramSocket

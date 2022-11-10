@@ -1,4 +1,4 @@
-package com.evanemran.wolclient
+package com.evanemran.wolclient.packet
 
 import android.content.Context
 import android.net.ConnectivityManager

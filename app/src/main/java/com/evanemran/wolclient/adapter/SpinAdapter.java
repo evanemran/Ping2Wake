@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.evanemran.wolclient.Device;
+import com.evanemran.wolclient.model.Device;
 
 import java.util.List;
 

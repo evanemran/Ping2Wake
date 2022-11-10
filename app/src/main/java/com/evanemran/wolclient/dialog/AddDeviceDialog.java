@@ -1,7 +1,6 @@
 package com.evanemran.wolclient.dialog;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.evanemran.wolclient.Device;
+import com.evanemran.wolclient.model.Device;
 import com.evanemran.wolclient.R;
 import com.evanemran.wolclient.listener.AddListener;
 import com.google.android.material.textfield.TextInputEditText;

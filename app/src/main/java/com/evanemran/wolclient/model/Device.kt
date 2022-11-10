@@ -1,4 +1,4 @@
-package com.evanemran.wolclient
+package com.evanemran.wolclient.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

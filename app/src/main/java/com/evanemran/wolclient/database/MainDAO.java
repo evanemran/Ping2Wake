@@ -7,7 +7,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.evanemran.wolclient.Device;
+import com.evanemran.wolclient.model.Device;
 
 import java.util.List;
 

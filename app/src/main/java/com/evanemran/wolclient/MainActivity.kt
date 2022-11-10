@@ -1,21 +1,21 @@
 package com.evanemran.wolclient
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.evanemran.wolclient.adapter.SpinAdapter
 import com.evanemran.wolclient.database.RoomDB
 import com.evanemran.wolclient.dialog.AddDeviceDialog
 import com.evanemran.wolclient.listener.AddListener
+import com.evanemran.wolclient.model.Device
+import com.evanemran.wolclient.packet.MagicPacket
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.net.*
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 
 class MainActivity : AppCompatActivity() , AddListener {
@@ -23,9 +23,13 @@ class MainActivity : AppCompatActivity() , AddListener {
     var mac = ""
     var database: RoomDB? = null
     var deviceList: List<Device> = mutableListOf()
+    lateinit var magicPacket: MagicPacket;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        magicPacket = MagicPacket(this)
 
         database = RoomDB.getInstance(this)
         deviceList = database?.mainDAO()!!.all
@@ -38,12 +42,30 @@ class MainActivity : AppCompatActivity() , AddListener {
         )
 
         //custom adapter
-        var cAdapter = SpinAdapter(this,
+        val cAdapter = SpinAdapter(this,
             R.layout.spinner_text,
             deviceList)
 
 
         spinner.adapter = cAdapter
+
+        spinner.onItemSelectedListener = object :  AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val device = deviceList[position]
+                editText_hostName.setText(device.deviceIp)
+                editText_mac.setText(device.deviceMac)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
 
         button_ping.setOnClickListener {
             ping(ip)
@@ -58,8 +80,37 @@ class MainActivity : AppCompatActivity() , AddListener {
 
         button_wol.setOnClickListener {
             ip = editText_hostName.text.toString()
-            mac = editText_mac.text.toString()
-            wakeUp("https://$ip", mac)
+            mac = "http://"+editText_mac.text.toString()
+//            wakeUp("https://$ip", mac)
+
+            Thread {
+                try {
+                    mac = MagicPacket.cleanMac(mac)
+                    magicPacket.send(mac, ip)
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Packet sent to $mac",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                } catch (e: IllegalArgumentException) {
+                    println(e.message)
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Failed to send packet " + e.message.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                } catch (e: java.lang.Exception) {
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Error while sending packet " + e.message.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+                runOnUiThread {
+
+                }
+            }.start()
         }
 
         imageButton_add.setOnClickListener {
@@ -129,7 +180,6 @@ class MainActivity : AppCompatActivity() , AddListener {
         }
         return bytes
     }
-
 
     private fun ping(ip: String) {
         try {
