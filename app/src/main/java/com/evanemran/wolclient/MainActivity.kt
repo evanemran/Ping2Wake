@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() , AddListener {
 
     private fun ping(ip: String) {
         try {
-            val url = URL("http://$ip")
+            val url = URL(ip)
             val urlc: HttpURLConnection = url.openConnection() as HttpURLConnection
             urlc.setRequestProperty("User-Agent", "Android Application:"/* + Z.APP_VERSION*/)
             urlc.setRequestProperty("Connection", "close")
@@ -195,8 +195,10 @@ class MainActivity : AppCompatActivity() , AddListener {
             }
         } catch (e1: MalformedURLException) {
             e1.printStackTrace()
+            Snackbar.make(findViewById(android.R.id.content), e1.message.toString(), Snackbar.LENGTH_SHORT).show()
         } catch (e: IOException) {
             e.printStackTrace()
+            Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_SHORT).show()
         }
     }
 
