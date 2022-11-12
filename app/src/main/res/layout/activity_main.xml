@@ -74,6 +74,16 @@
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textView_console"
+            android:text=""
+            android:textColor="@color/grey"
+            android:padding="4dp"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

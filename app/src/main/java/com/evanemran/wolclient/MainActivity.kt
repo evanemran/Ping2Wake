@@ -14,7 +14,9 @@ import com.evanemran.wolclient.model.Device
 import com.evanemran.wolclient.packet.MagicPacket
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStreamReader
 import java.net.*
 
 
@@ -68,7 +70,15 @@ class MainActivity : AppCompatActivity() , AddListener {
         }
 
         button_ping.setOnClickListener {
-            ping(ip)
+
+            var commands: MutableList<String> = mutableListOf()
+            commands.add("ping")
+            commands.add(editText_hostName.text.toString())
+
+            ping(commands)
+
+
+//            ping(ip)
 //            try{
 //                val p : Ping = ping(URL(editText_hostName.text.toString()), this)
 //                Snackbar.make(findViewById(android.R.id.content), p.getResponse(), Snackbar.LENGTH_SHORT).show()
@@ -87,11 +97,6 @@ class MainActivity : AppCompatActivity() , AddListener {
                 try {
                     mac = MagicPacket.cleanMac(mac)
                     magicPacket.send(mac, ip)
-                    Snackbar.make(
-                        findViewById(android.R.id.content),
-                        "Packet sent to $mac",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
                 } catch (e: IllegalArgumentException) {
                     println(e.message)
                     Snackbar.make(
@@ -108,7 +113,14 @@ class MainActivity : AppCompatActivity() , AddListener {
                 }
 
                 runOnUiThread {
-
+                    textView_console.text = textView_console.text.toString() + "\n" + "verifying mac address..."
+                    textView_console.text = textView_console.text.toString() + "\n" + "mac address verified..."
+                    textView_console.text = textView_console.text.toString() + "\n" + "Packet sent to $mac..."
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Packet sent to $mac",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }.start()
         }
@@ -179,6 +191,41 @@ class MainActivity : AppCompatActivity() , AddListener {
             Log.e("GetMacBytes", e.message.toString())
         }
         return bytes
+    }
+
+    private fun ping(commands: List<String>) {
+
+        Thread {
+            try {
+                val processBuilder: ProcessBuilder = ProcessBuilder(commands)
+                val process: Process = processBuilder.start()
+
+                val input = BufferedReader(InputStreamReader(process.inputStream))
+                val Error = BufferedReader(InputStreamReader(process.errorStream))
+                var s: String? = ""
+
+                println("Standard output: ")
+                while (input.readLine().also { s = it } != null) {
+                    textView_console.text = textView_console.text.toString() + "\n" + s
+                    System.out.println(s)
+                }
+                println("error (if any): ")
+                while (Error.readLine().also { s = it } != null) {
+                    textView_console.text = textView_console.text.toString() + "\n" + s
+                    System.out.println(s)
+                }
+            } catch (e: Exception) {
+                println(e.message)
+                Snackbar.make(
+                    findViewById(android.R.id.content),
+                    "Failed to send ping " + e.message.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            runOnUiThread {
+            }
+        }.start()
+
     }
 
     private fun ping(ip: String) {
