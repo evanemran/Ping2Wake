@@ -23,6 +23,7 @@ import java.net.*
 class MainActivity : AppCompatActivity() , AddListener {
     var ip = ""
     var mac = ""
+    var deviceName: String = ""
     var database: RoomDB? = null
     var deviceList: List<Device> = mutableListOf()
     lateinit var magicPacket: MagicPacket;
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() , AddListener {
                 id: Long
             ) {
                 val device = deviceList[position]
+                deviceName = device.deviceName
                 editText_hostName.setText(device.deviceIp)
                 editText_mac.setText(device.deviceMac)
             }
@@ -72,6 +74,7 @@ class MainActivity : AppCompatActivity() , AddListener {
         button_ping.setOnClickListener {
 
             var commands: MutableList<String> = mutableListOf()
+            commands.clear()
             commands.add("ping")
             commands.add(editText_hostName.text.toString())
 
@@ -116,6 +119,7 @@ class MainActivity : AppCompatActivity() , AddListener {
                     textView_console.text = textView_console.text.toString() + "\n" + "verifying mac address..."
                     textView_console.text = textView_console.text.toString() + "\n" + "mac address verified..."
                     textView_console.text = textView_console.text.toString() + "\n" + "Packet sent to $mac..."
+                    textView_console.text = textView_console.text.toString() + "\n" + "$deviceName turned on! Sending ping..."
                     Snackbar.make(
                         findViewById(android.R.id.content),
                         "Packet sent to $mac",
