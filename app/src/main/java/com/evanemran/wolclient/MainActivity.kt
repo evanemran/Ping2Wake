@@ -18,6 +18,7 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.*
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() , AddListener {
@@ -199,7 +200,9 @@ class MainActivity : AppCompatActivity() , AddListener {
 
     private fun ping(commands: List<String>) {
 
-        Thread {
+        progressbar.visibility = View.VISIBLE
+
+        thread {
             try {
                 val processBuilder: ProcessBuilder = ProcessBuilder(commands)
                 val process: Process = processBuilder.start()
@@ -213,11 +216,13 @@ class MainActivity : AppCompatActivity() , AddListener {
                     textView_console.text = textView_console.text.toString() + "\n" + s
                     System.out.println(s)
                 }
+                progressbar.visibility = View.GONE
                 println("error (if any): ")
                 while (Error.readLine().also { s = it } != null) {
                     textView_console.text = textView_console.text.toString() + "\n" + s
                     System.out.println(s)
                 }
+                progressbar.visibility = View.GONE
             } catch (e: Exception) {
                 println(e.message)
                 Snackbar.make(
@@ -225,10 +230,9 @@ class MainActivity : AppCompatActivity() , AddListener {
                     "Failed to send ping " + e.message.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
+                progressbar.visibility = View.GONE
             }
-            runOnUiThread {
-            }
-        }.start()
+        }
 
     }
 
