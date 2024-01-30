@@ -57,7 +57,7 @@ public class SpinAdapter extends ArrayAdapter<Device> {
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
-        label.setTextColor(Color.BLACK);
+        label.setTextColor(Color.WHITE);
         label.setText(list.get(position).getDeviceName());
 
         return label;

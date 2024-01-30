@@ -7,9 +7,19 @@
     android:fitsSystemWindows="true"
     android:background="@color/black"
     tools:context=".MainActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/appBar"
+        app:title="@string/app_name"
+        android:backgroundTint="@color/purple_200"
+        android:background="@color/purple_200"
+        app:titleTextColor="@color/white"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/appBar"
         android:padding="16dp"
         android:orientation="vertical">
 
@@ -21,6 +31,7 @@
             android:orientation="horizontal">
             <TextView
                 android:text="Host: "
+                android:fontFamily="@font/custom_font_medium"
                 android:textColor="@color/grey"
                 android:textSize="20sp"
                 android:padding="8dp"
@@ -39,6 +50,7 @@
 
         <EditText
             android:id="@+id/editText_hostName"
+            android:fontFamily="@font/custom_font_medium"
             android:hint="Enter host..."
             android:text="@string/default_host"
             android:textColorHint="@color/grey"
@@ -51,6 +63,7 @@
 
         <EditText
             android:id="@+id/editText_mac"
+            android:fontFamily="@font/custom_font_medium"
             android:hint="Enter Mac Address..."
             android:text="@string/mac"
             android:textColorHint="@color/grey"
@@ -63,14 +76,18 @@
 
         <Button
             android:id="@+id/button_ping"
+            android:fontFamily="@font/custom_font_bold"
             android:text="Ping"
+            android:textSize="18sp"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/button_wol"
+            android:fontFamily="@font/custom_font_bold"
             android:text="Wake on LAN"
+            android:textSize="18sp"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -80,10 +97,11 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/textView_console"
-                android:text="afaf"
+                android:fontFamily="@font/custom_font_regular"
+                android:text="Command Response..."
                 android:textColor="@color/grey"
                 android:padding="4dp"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"/>

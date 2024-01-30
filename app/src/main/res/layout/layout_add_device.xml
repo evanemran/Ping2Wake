@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@drawable/rounded_view"
     android:padding="16dp"
     android:orientation="vertical">
 
     <TextView
         android:text="Add a Device"
+        android:fontFamily="@font/custom_font_bold"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/purple_200"
@@ -22,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Device Name"
+        android:textColorHint="@color/grey"
         android:layout_marginTop="8dp"
         app:endIconCheckable="false"
         app:endIconMode="custom"
@@ -31,7 +33,9 @@
             android:id="@+id/editTextDeviceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/custom_font_medium"
             android:inputType="textPersonName"
+            android:textColor="@color/white"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -39,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Device IP"
+        android:textColorHint="@color/grey"
         android:layout_marginTop="8dp"
         app:endIconCheckable="false"
         app:endIconMode="custom"
@@ -48,6 +53,8 @@
             android:id="@+id/editTextDeviceIP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/custom_font_medium"
+            android:textColor="@color/white"
             android:inputType="textPersonName"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -56,6 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Device MAC"
+        android:textColorHint="@color/grey"
         android:layout_marginTop="8dp"
         app:endIconCheckable="false"
         app:endIconMode="custom"
@@ -65,12 +73,15 @@
             android:id="@+id/editTextDeviceMAC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/custom_font_medium"
+            android:textColor="@color/white"
             android:inputType="textPersonName"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button_add_device"
+        android:fontFamily="@font/custom_font_bold"
         android:text="Add"
         android:layout_marginTop="8dp"
         android:padding="8dp"
@@ -79,6 +90,7 @@
 
     <Button
         android:id="@+id/button_cancel"
+        android:fontFamily="@font/custom_font_bold"
         android:text="Cancel"
         android:layout_marginTop="8dp"
         android:padding="8dp"

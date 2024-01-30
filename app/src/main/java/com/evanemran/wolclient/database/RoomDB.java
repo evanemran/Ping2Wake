@@ -11,7 +11,7 @@ import com.evanemran.wolclient.model.Device;
 @Database(entities = {Device.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
     private static RoomDB database;
-    private static String DATABASE_NAME = "wakeup";
+    private static String DATABASE_NAME = "quick_ping";
 
     public synchronized static RoomDB getInstance(Context context){
         if (database == null){

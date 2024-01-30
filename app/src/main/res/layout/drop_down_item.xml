@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
+    android:fontFamily="@font/custom_font_medium"
     android:maxLines="1"
     android:ellipsize="end"
+    android:background="@color/black"
+    android:textColor="@color/white"
     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
 
 </TextView>
